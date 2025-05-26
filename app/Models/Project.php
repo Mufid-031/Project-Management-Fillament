@@ -3,15 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Project extends Model
 {
-    public function users(): BelongsToMany
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    public function teamMembers()
     {
         return $this->belongsToMany(
             User::class,
-            'project_users',
+            'project_members',
             'project_id',
             'user_id'
         );
