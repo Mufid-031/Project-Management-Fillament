@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tickets', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->string('uuid')->unique()->nullable();
-            $table->foreignId('project_id')->constrained()->onDelete('cascade');
-            $table->foreignId('ticket_status_id')->constrained()->onDelete('cascade');
-            $table->string('name');
+            $table->foreignId('project_id')->constrained('projects')->onDelete('cascade');
+            $table->string('title');
             $table->text('description')->nullable();
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->enum('status', [
+                'Belum Dikerjakan',
+                'Sedang Dikerjakan',
+                'Selesai'
+            ])->default('Belum Dikerjakan');
+            $table->foreignId('assigned_id')->nullable()->constrained('users')->onDelete('set null');
             $table->date('due_date')->nullable();
             $table->timestamps();
         });
@@ -29,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tickets');
+        Schema::dropIfExists('tasks');
     }
 };

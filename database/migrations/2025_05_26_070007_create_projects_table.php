@@ -15,7 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->string('ticket_prefix');
+            $table->enum('status', [
+                'Baru',
+                'Dikerjakan',
+                'Selesai',
+                'Ditunda'
+            ])->default('Baru');
+            $table->date('due_date')->nullable();
             $table->timestamps();
         });
     }
