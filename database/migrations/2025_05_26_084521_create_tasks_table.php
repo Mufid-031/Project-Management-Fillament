@@ -22,6 +22,7 @@ return new class extends Migration
                 'Selesai'
             ])->default('Belum Dikerjakan');
             $table->foreignId('assigned_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->date('start_date')->nullable();
             $table->date('due_date')->nullable();
             $table->timestamps();
         });

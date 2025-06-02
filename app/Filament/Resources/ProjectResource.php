@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProjectResource\Pages;
+use App\Filament\Resources\ProjectResource\Pages\ProjectTimeline;
 use App\Filament\Resources\ProjectResource\RelationManagers;
 use App\Models\Project;
 use Filament\Forms;
@@ -65,6 +66,10 @@ class ProjectResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                // Tables\Actions\Action::make('timeline')
+                //     ->label('Timeline Tugas')
+                //     ->icon('heroicon-o-chart-bar-square') // Sesuaikan ikon
+                //     ->url(fn(Project $record): string => static::getUrl('timeline', ['record' => $record])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -87,6 +92,7 @@ class ProjectResource extends Resource
             'index' => Pages\ListProjects::route('/'),
             'create' => Pages\CreateProject::route('/create'),
             'edit' => Pages\EditProject::route('/{record}/edit'),
+            'timeline' => ProjectTimeline::route('/{record}/timeline'), // Halaman timeline kita
         ];
     }
 }

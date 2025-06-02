@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ProjectResource\RelationManagers;
 
+use App\Models\Project;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -32,10 +33,11 @@ class TasksRelationManager extends RelationManager
                     ])
                     ->default('Belum Dikerjakan')
                     ->required(),
-                Forms\Components\Select::make('assignee_id')
+                Forms\Components\Select::make('assigned_id')
                     ->label('Assignee')
                     ->options(User::all()->pluck('name', 'id')) // Ambil user untuk pilihan
                     ->searchable(),
+                Forms\Components\DatePicker::make('start_date'),
                 Forms\Components\DatePicker::make('due_date'),
             ]);
     }
@@ -48,6 +50,7 @@ class TasksRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('title')->searchable(),
                 Tables\Columns\TextColumn::make('assignee.name')->label('Assignee')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('status')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('start_date')->dateTime()->sortable(),
                 Tables\Columns\TextColumn::make('due_date')->date()->sortable(),
             ])
             ->filters([
@@ -59,6 +62,10 @@ class TasksRelationManager extends RelationManager
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                // Tables\Actions\Action::make('timeline')
+                //     ->label('Timeline Tugas')
+                //     ->icon('heroicon-o-chart-bar-square') // Sesuaikan ikon
+                //     ->url(fn(Project $record): string => static::getUrl('timeline', ['record' => $record])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

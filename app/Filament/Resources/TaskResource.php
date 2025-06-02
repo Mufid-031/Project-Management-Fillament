@@ -48,6 +48,7 @@ class TaskResource extends Resource
                     ->relationship('assignee', 'name') // Relasi ke model User, tampilkan 'name'
                     ->searchable()
                     ->preload(),
+                Forms\Components\DatePicker::make('start_date'),
                 Forms\Components\DatePicker::make('due_date'),
             ]);
     }
@@ -60,7 +61,8 @@ class TaskResource extends Resource
                 Tables\Columns\TextColumn::make('project.name')->label('Project')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('assignee.name')->label('Assignee')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('status')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('due_date')->date()->sortable(),
+                // Tables\Columns\TextColumn::make('start_date')->dateTime()->sortable(),
+                // Tables\Columns\TextColumn::make('due_date')->date()->sortable(),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('project_id')
